@@ -1,0 +1,41 @@
+[
+  {
+    "name": "Naver Webtoon",
+    "url": "https://webtoon.kakao.com",
+    "language": [
+      "Korean",
+      "English"
+    ],
+    "country": "Korea",
+    "genres": [
+      "Romance",
+      "Drama",
+      "Fantasy",
+      "Action"
+    ],
+    "status": "online",
+    "nsfw": false,
+    "added_at": "2026-06-27",
+    "description": "Platform webtoon terbesar di Korea dengan berbagai genre.",
+    "popularity": 96
+  },
+  {
+    "name": "Toomics",
+    "url": "https://toomics.com",
+    "language": [
+      "Korean",
+      "English"
+    ],
+    "country": "Korea",
+    "genres": [
+      "Romance",
+      "Mature",
+      "Drama"
+    ],
+    "status": "online",
+    "nsfw": true,
+    "added_at": "2026-06-21",
+    "description": "Webtoon premium dengan konten dewasa.",
+    "popularity": 70
+  }
+]

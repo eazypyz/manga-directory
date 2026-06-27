@@ -1,0 +1,106 @@
+[
+  {
+    "name": "MangaDex",
+    "url": "https://mangadex.org",
+    "language": [
+      "English",
+      "Spanish",
+      "French",
+      "Indonesia"
+    ],
+    "country": "Global",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Comedy",
+      "Drama",
+      "Fantasy"
+    ],
+    "status": "online",
+    "nsfw": false,
+    "added_at": "2026-06-27",
+    "description": "The largest manga reading platform with multi-language support and community uploads.",
+    "popularity": 100
+  },
+  {
+    "name": "MangaPlus",
+    "url": "https://mangaplus.shueisha.co.jp",
+    "language": [
+      "English",
+      "Spanish",
+      "Thai",
+      "Indonesia"
+    ],
+    "country": "Japan",
+    "genres": [
+      "Action",
+      "Shonen",
+      "Sports",
+      "Supernatural"
+    ],
+    "status": "online",
+    "nsfw": false,
+    "added_at": "2026-06-26",
+    "description": "Official Shueisha manga platform with latest chapters from Jump series.",
+    "popularity": 98
+  },
+  {
+    "name": "ComicK",
+    "url": "https://comick.io",
+    "language": [
+      "English",
+      "Japanese",
+      "Korean",
+      "Chinese"
+    ],
+    "country": "Global",
+    "genres": [
+      "Action",
+      "Romance",
+      "Horror",
+      "Sci-Fi"
+    ],
+    "status": "online",
+    "nsfw": false,
+    "added_at": "2026-06-24",
+    "description": "Modern manga reader with clean UI and fast updates.",
+    "popularity": 88
+  },
+  {
+    "name": "MangaNato",
+    "url": "https://manganato.com",
+    "language": [
+      "English"
+    ],
+    "country": "Global",
+    "genres": [
+      "Action",
+      "Romance",
+      "Fantasy",
+      "Manhua"
+    ],
+    "status": "online",
+    "nsfw": false,
+    "added_at": "2026-06-22",
+    "description": "Popular manga aggregator with huge collection.",
+    "popularity": 92
+  },
+  {
+    "name": "Toonily",
+    "url": "https://toonily.com",
+    "language": [
+      "English"
+    ],
+    "country": "Global",
+    "genres": [
+      "Romance",
+      "Drama",
+      "Mature"
+    ],
+    "status": "online",
+    "nsfw": true,
+    "added_at": "2026-06-18",
+    "description": "Webtoon and manhwa reader with mature content.",
+    "popularity": 75
+  }
+]

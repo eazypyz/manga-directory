@@ -1,0 +1,75 @@
+[
+  {
+    "name": "KomikIndo",
+    "url": "https://komikindo.co",
+    "language": [
+      "Indonesia"
+    ],
+    "country": "Indonesia",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Fantasy",
+      "Romance"
+    ],
+    "status": "online",
+    "nsfw": false,
+    "added_at": "2026-06-27",
+    "description": "Situs baca manga dan komik Indonesia dengan koleksi lengkap dan update harian.",
+    "popularity": 95
+  },
+  {
+    "name": "MaidManga",
+    "url": "https://maid.my.id",
+    "language": [
+      "Indonesia"
+    ],
+    "country": "Indonesia",
+    "genres": [
+      "Comedy",
+      "Romance",
+      "Slice of Life"
+    ],
+    "status": "online",
+    "nsfw": false,
+    "added_at": "2026-06-25",
+    "description": "Komik Indonesia dengan tampilan bersih dan navigasi mudah.",
+    "popularity": 78
+  },
+  {
+    "name": "WestManga",
+    "url": "https://westmanga.info",
+    "language": [
+      "Indonesia"
+    ],
+    "country": "Indonesia",
+    "genres": [
+      "Action",
+      "Drama",
+      "Seinen"
+    ],
+    "status": "online",
+    "nsfw": false,
+    "added_at": "2026-06-20",
+    "description": "Situs baca manga terjemahan Indonesia dengan berbagai genre.",
+    "popularity": 82
+  },
+  {
+    "name": "MangaID",
+    "url": "https://mangaid.click",
+    "language": [
+      "Indonesia"
+    ],
+    "country": "Indonesia",
+    "genres": [
+      "Harem",
+      "Ecchi",
+      "Romance"
+    ],
+    "status": "offline",
+    "nsfw": true,
+    "added_at": "2026-06-15",
+    "description": "Situs baca manga dengan konten dewasa.",
+    "popularity": 45
+  }
+]

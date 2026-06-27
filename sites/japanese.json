@@ -1,0 +1,58 @@
+[
+  {
+    "name": "Pixiv Comics",
+    "url": "https://comic.pixiv.net",
+    "language": [
+      "Japanese"
+    ],
+    "country": "Japan",
+    "genres": [
+      "Romance",
+      "Comedy",
+      "Slice of Life"
+    ],
+    "status": "online",
+    "nsfw": false,
+    "added_at": "2026-06-27",
+    "description": "Platform manga digital dari Pixiv dengan banyak judul eksklusif.",
+    "popularity": 85
+  },
+  {
+    "name": "ComicWalker",
+    "url": "https://comic-walker.com",
+    "language": [
+      "Japanese",
+      "English"
+    ],
+    "country": "Japan",
+    "genres": [
+      "Shonen",
+      "Seinen",
+      "Action",
+      "Fantasy"
+    ],
+    "status": "online",
+    "nsfw": false,
+    "added_at": "2026-06-23",
+    "description": "Platform manga gratis dari Kadokawa dengan banyak judul populer.",
+    "popularity": 80
+  },
+  {
+    "name": "S-Manga",
+    "url": "https://s-manga.net",
+    "language": [
+      "Japanese"
+    ],
+    "country": "Japan",
+    "genres": [
+      "Shonen",
+      "Shoujo",
+      "Seinen"
+    ],
+    "status": "offline",
+    "nsfw": false,
+    "added_at": "2026-06-10",
+    "description": "Situs manga Shueisha.",
+    "popularity": 60
+  }
+]
