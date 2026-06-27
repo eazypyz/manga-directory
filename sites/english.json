@@ -102,5 +102,24 @@
     "added_at": "2026-06-18",
     "description": "Webtoon and manhwa reader with mature content.",
     "popularity": 75
+  }, 
+  {
+    "name": "Nelomanga",
+    "url": "https://www.nelomanga.net",
+    "language": [
+      "English"
+    ],
+    "country": "Global",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Drama",
+      "Mature"
+    ],
+    "status": "online",
+    "nsfw": "true",
+    "added_at": "2026-06-27"
+    "description": "Nelomanga merupakan tempat membaca manga, manwa dan manhua seperti manganato sebelumnya.",
+    "popularity": 50"
   }
 ]
