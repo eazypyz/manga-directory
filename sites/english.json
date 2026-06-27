@@ -79,7 +79,7 @@
       "Fantasy",
       "Manhua"
     ],
-    "status": "online",
+    "status": "offline",
     "nsfw": false,
     "added_at": "2026-06-22",
     "description": "Popular manga aggregator with huge collection.",
@@ -102,20 +102,12 @@
     "added_at": "2026-06-18",
     "description": "Webtoon and manhwa reader with mature content.",
     "popularity": 75
-  }, 
-  {
+  }, {
     "name": "Nelomanga",
     "url": "https://www.nelomanga.net",
-    "language": [
-      "English"
-    ],
+    "language": ["English"],
     "country": "Global",
-    "genres": [
-      "Action",
-      "Adventure",
-      "Drama",
-      "Mature"
-    ],
+    "genres": ["Action", "Adventure", "Drama", "Mature"],
     "status": "online",
     "nsfw": "true",
     "added_at": "2026-06-27",
