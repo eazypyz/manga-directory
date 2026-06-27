@@ -1,0 +1,248 @@
+ame: Validate Site Data
+
+on:
+  pull_request:
+    paths:
+      - 'sites/**.json'
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'sites/**.json'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    name: Validate JSON and Site Data
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Validate JSON syntax
+      run: |
+        echo "::group::Validating JSON syntax..."
+        for file in sites/*.json; do
+          echo "Checking $file..."
+          if ! node -e "JSON.parse(require('fs').readFileSync('$file'))"; then
+            echo "::error::Invalid JSON in $file"
+            exit 1
+          fi
+        done
+        echo "::endgroup::"
+
+    - name: Validate data structure
+      run: |
+        cat > validate-structure.js << 'EOF'
+        const fs = require('fs');
+        const path = require('path');
+        const https = require('https');
+        const http = require('http');
+
+        const REQUIRED_FIELDS = ['name', 'url', 'language', 'country', 'genres', 'status', 'nsfw', 'added_at'];
+        const VALID_STATUSES = ['online', 'offline'];
+        const ALLOWED_LANGUAGES = ['Indonesia', 'English', 'Japanese', 'Korean', 'Chinese', 'Spanish', 'French', 'Thai', 'Vietnamese', 'Portuguese', 'Russian', 'German', 'Italian', 'Arabic', 'Turkish', 'Polish'];
+        const ALLOWED_COUNTRIES = ['Indonesia', 'Japan', 'Korea', 'China', 'United States', 'UK', 'Global', 'Vietnam', 'Thailand', 'France', 'Spain', 'Germany', 'Russia', 'Brazil', 'Turkey', 'Poland', 'Italy', 'Philippines', 'Malaysia', 'Singapore', 'Taiwan', 'Hong Kong'];
+
+        let exitCode = 0;
+        const errors = [];
+        const warnings = [];
+        const allUrls = new Map(); // Map<domain, file>
+
+        function validateUrl(url) {
+          try {
+            const parsed = new URL(url);
+            if (!['http:', 'https:'].includes(parsed.protocol)) {
+              return { valid: false, error: 'URL must use HTTP or HTTPS protocol' };
+            }
+            return { valid: true, domain: parsed.hostname.toLowerCase() };
+          } catch (e) {
+            return { valid: false, error: 'Invalid URL format' };
+          }
+        }
+
+        function checkUrlAccessibility(url) {
+          return new Promise((resolve) => {
+            const client = url.startsWith('https') ? https : http;
+            const req = client.get(url, { 
+              timeout: 15000,
+              headers: { 'User-Agent': 'MangaDirectory-Validator/1.0' }
+            }, (res) => {
+              resolve({ 
+                accessible: res.statusCode < 400 || res.statusCode === 403, 
+                statusCode: res.statusCode 
+              });
+            });
+            req.on('error', () => resolve({ accessible: false, statusCode: null }));
+            req.on('timeout', () => { req.destroy(); resolve({ accessible: false, statusCode: null }); });
+          });
+        }
+
+        async function validateFile(filePath) {
+          const fileName = path.basename(filePath);
+          const content = fs.readFileSync(filePath, 'utf8');
+          let data;
+
+          try {
+            data = JSON.parse(content);
+          } catch (e) {
+            errors.push(`${fileName}: Invalid JSON - ${e.message}`);
+            return;
+          }
+
+          if (!Array.isArray(data)) {
+            errors.push(`${fileName}: Root must be an array`);
+            return;
+          }
+
+          for (let i = 0; i < data.length; i++) {
+            const site = data[i];
+            const prefix = `${fileName}[${i}]`;
+
+            // Check required fields
+            for (const field of REQUIRED_FIELDS) {
+              if (!(field in site)) {
+                errors.push(`${prefix}: Missing required field "${field}"`);
+              }
+            }
+
+            // Validate URL
+            if (site.url) {
+              const urlCheck = validateUrl(site.url);
+              if (!urlCheck.valid) {
+                errors.push(`${prefix}: ${urlCheck.error}`);
+              } else {
+                // Check duplicates
+                if (allUrls.has(urlCheck.domain)) {
+                  errors.push(`${prefix}: Duplicate domain "${urlCheck.domain}" (already exists in ${allUrls.get(urlCheck.domain)})`);
+                } else {
+                  allUrls.set(urlCheck.domain, fileName);
+                }
+
+                // Check accessibility for online sites (only on PR, not on every push to save time)
+                if (site.status === 'online' && process.env.GITHUB_EVENT_NAME === 'pull_request') {
+                  const access = await checkUrlAccessibility(site.url);
+                  if (!access.accessible) {
+                    warnings.push(`${prefix}: URL returned status ${access.statusCode || 'unreachable'}. Consider marking as offline if consistently unreachable.`);
+                  }
+                }
+              }
+            }
+
+            // Validate status
+            if (site.status && !VALID_STATUSES.includes(site.status)) {
+              errors.push(`${prefix}: Invalid status "${site.status}". Must be one of: ${VALID_STATUSES.join(', ')}`);
+            }
+
+            // Validate language
+            if (site.language) {
+              if (!Array.isArray(site.language)) {
+                errors.push(`${prefix}: "language" must be an array`);
+              } else {
+                for (const lang of site.language) {
+                  if (!ALLOWED_LANGUAGES.includes(lang)) {
+                    warnings.push(`${prefix}: Language "${lang}" is not in the standard list. Please verify.`);
+                  }
+                }
+              }
+            }
+
+            // Validate country
+            if (site.country && !ALLOWED_COUNTRIES.includes(site.country)) {
+              warnings.push(`${prefix}: Country "${site.country}" is not in the standard list. Please verify.`);
+            }
+
+            // Validate genres
+            if (site.genres && !Array.isArray(site.genres)) {
+              errors.push(`${prefix}: "genres" must be an array`);
+            }
+
+            // Validate nsfw
+            if (typeof site.nsfw !== 'boolean') {
+              errors.push(`${prefix}: "nsfw" must be a boolean (true or false)`);
+            }
+
+            // Validate added_at
+            if (site.added_at) {
+              const date = new Date(site.added_at);
+              if (isNaN(date.getTime())) {
+                errors.push(`${prefix}: Invalid date format for "added_at". Use YYYY-MM-DD format.`);
+              } else if (date > new Date()) {
+                errors.push(`${prefix}: "added_at" cannot be in the future.`);
+              }
+            }
+
+            // Validate name
+            if (site.name && site.name.length > 100) {
+              warnings.push(`${prefix}: Site name is very long (${site.name.length} chars). Consider shortening.`);
+            }
+
+            // Validate description
+            if (site.description && site.description.length > 500) {
+              warnings.push(`${prefix}: Description is very long (${site.description.length} chars). Consider shortening to under 500 chars.`);
+            }
+
+            // Validate popularity if present
+            if (site.popularity !== undefined) {
+              if (typeof site.popularity !== 'number' || site.popularity < 0 || site.popularity > 100) {
+                errors.push(`${prefix}: "popularity" must be a number between 0 and 100.`);
+              }
+            }
+          }
+        }
+
+        async function main() {
+          const files = fs.readdirSync('sites').filter(f => f.endsWith('.json'));
+
+          for (const file of files) {
+            await validateFile(path.join('sites', file));
+          }
+
+          console.log('=== Validation Results ===\n');
+
+          if (errors.length > 0) {
+            console.log(`❌ ERRORS (${errors.length}):`);
+            errors.forEach(e => console.log(`  - ${e}`));
+            console.log('');
+          }
+
+          if (warnings.length > 0) {
+            console.log(`⚠️ WARNINGS (${warnings.length}):`);
+            warnings.forEach(w => console.log(`  - ${w}`));
+            console.log('');
+          }
+
+          if (errors.length === 0 && warnings.length === 0) {
+            console.log('✅ All validations passed!');
+          } else if (errors.length === 0) {
+            console.log('✅ No errors found, but there are warnings.');
+          }
+
+          if (errors.length > 0) {
+            process.exit(1);
+          }
+        }
+
+        main().catch(err => {
+          console.error('Validation script error:', err);
+          process.exit(1);
+        });
+        EOF
+        node validate-structure.js
+
+    - name: Comment on PR
+      if: github.event_name == 'pull_request' && failure()
+      uses: actions/github-script@v7
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '❌ **Validasi Gagal**\n\nMohon periksa log untuk detail kesalahan. Pastikan:\n- Format JSON valid\n- Semua field wajib diisi\n- URL valid dan tidak duplikat\n- Status hanya "online" atau "offline"\n\nLihat [PANDUAN KONTRIBUSI](https://github.com/${{ github.repository }}/blob/main/README.md) untuk informasi lebih lanjut.'
+          })
