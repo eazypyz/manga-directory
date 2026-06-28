@@ -54,13 +54,14 @@
     "added_at": "2026-06-10",
     "description": "Situs manga Shueisha.",
     "popularity": 60
-  },{
+  },
+  {
     "name": "Pawchive",
     "url": "https://pawchive.st",
     "language": ["Japanese", "English"],
     "country": "United States",
     "genres": ["Ecchi", "Mature", "18+" "Hentai"],
-    "status" "online",
+    "status": "online",
     "nsfw": true,
     "added_at": "2026-06-29",
     "description": "Pawchive is a public archiver based on Kemono",
