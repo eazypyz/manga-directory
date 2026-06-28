@@ -54,8 +54,7 @@
     "added_at": "2026-06-10",
     "description": "Situs manga Shueisha.",
     "popularity": 60
-  },
-  {
+  },{
     "name": "Pawchive",
     "url": "https://pawchive.st",
     "language": ["Japanese", "English"],
