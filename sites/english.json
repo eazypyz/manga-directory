@@ -109,7 +109,7 @@
     "country": "Global",
     "genres": ["Action", "Adventure", "Drama", "Mature"],
     "status": "online",
-    "nsfw": "true",
+    "nsfw": true,
     "added_at": "2026-06-27",
     "description": "Nelomanga merupakan tempat membaca manga, manwa dan manhua seperti manganato sebelumnya.",
     "popularity": 50
@@ -120,7 +120,7 @@
     "country": "Global",
     "genres": ["Mature", "18+", "Ecchi", "Mature"],
     "status": "online",
-    "nsfw": "true",
+    "nsfw": true,
     "added_at": "2026-06-29",
     "description": "Kemono is a public archiver.",
     "popularity": 80
