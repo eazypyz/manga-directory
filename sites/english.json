@@ -113,5 +113,16 @@
     "added_at": "2026-06-27",
     "description": "Nelomanga merupakan tempat membaca manga, manwa dan manhua seperti manganato sebelumnya.",
     "popularity": 50
+  }, {
+    "name": "Kemono",
+    "url": "https://kemono.cr",
+    "language": ["English", Japanese],
+    "country": "Global",
+    "genres": ["Mature", "18+", "Ecchi", "Mature"],
+    "status": "online",
+    "nsfw": "true",
+    "added_at": "2026-06-29",
+    "description": "Kemono is a public archiver forPatreon, Pixiv, Fanbox, Discord, Fantia, Afdian, Boosty, Gumroad, SubscribeStar And DLsite.",
+    "popularity": 80
   }
 ]
