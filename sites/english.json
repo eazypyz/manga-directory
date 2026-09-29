@@ -124,5 +124,17 @@
     "added_at": "2026-06-29",
     "description": "Kemono is a public archiver.",
     "popularity": 80
-  }
+  },
+  {
+    "name": "comix",
+    "url": "https://comix.to",
+    "language": ["English"],
+    "country": "global",
+    "genres": ["Action", "Shoujo", "Romance", "Crimes", "Sports"],
+    "status": "online",
+    "nsfw": false,
+    "added_at": "2026-09-29",
+    "description": "comix is public mangas",
+    "popularity": 50,
+  },
 ]
